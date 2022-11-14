@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+    <h1 id="header">AN OCTAHEDRON</h1>
+
+    <canvas id="myCanvas"></canvas>
+    <script src="./three.js"></script>
+    <script>
+        var ren = new THREE.WebGLRenderer({canvas: document.getElementById('myCanvas'),antialias: true});
+        ren.setClearColor(0xffff90);
+        ren.setPixelRatio(window.devicePixelRatio);
+        ren.setSize(window.innerWidth,window.innerHeight);
+
+        var cam  = new THREE.PerspectiveCamera(35,window.innerWidth/window.innerHeight,0.1,3000);
+        //cam.position.set(0,0,0);
+        
+        var scn = new THREE.Scene();
+
+        var light1 = new THREE.AmbientLight(0xff0011,0.5);
+        var light2 = new THREE.PointLight(0xff0011,0.5);
+
+        var geon = new THREE.OctahedronGeometry(10,1);
+
+        var mat = new THREE.MeshLambertMaterial({color: 0xf3ffe2});
+
+        var mesh = new THREE.Mesh(geon,mat);
+        mesh.position.set(0,0,-100);
+        scn.add(mesh);
+        scn.add(light1);
+        scn.add(light2);
+
+        requestAnimationFrame(render);
+
+        function render(){
+            mesh.rotation.x += 0.01;
+            mesh.rotation.y += 0.01;
+            ren.render(scn,cam);
+            requestAnimationFrame(render);
+        }
+
+        ren.render(scn,cam);
+        console.log("%cMade by Amirtha Krishnan.","background-color: #000; color: #ff0;font-size:1rem;");
+        console.log("%cReach out to me at @amirthaz on Instagram.","background-color: #000; color: #ff0;font-size:1rem;");
+    </script>
+
+</body>
+</html>
