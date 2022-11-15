@@ -9,46 +9,126 @@
 </head>
 <body>
 
-    <h1 id="header">AN OCTAHEDRON</h1>
+    <h1 id="header">HOVER TO DISCOVER SHAPES!</h1>
+    <p id="shape">@$#%@&^#&#@</p>
 
     <canvas id="myCanvas"></canvas>
     <script src="./three.js"></script>
+    <script src="./threex.domevent.js"></script>
     <script>
         var ren = new THREE.WebGLRenderer({canvas: document.getElementById('myCanvas'),antialias: true});
-        ren.setClearColor(0xffff90);
+        ren.setClearColor(0x000);
         ren.setPixelRatio(window.devicePixelRatio);
         ren.setSize(window.innerWidth,window.innerHeight);
 
         var cam  = new THREE.PerspectiveCamera(35,window.innerWidth/window.innerHeight,0.1,3000);
+        var domEvents = new THREEx.DomEvents(cam,ren.domElement)
         //cam.position.set(0,0,0);
-        
+
         var scn = new THREE.Scene();
 
-        var light1 = new THREE.AmbientLight(0xff0011,0.5);
-        var light2 = new THREE.PointLight(0xff0011,0.5);
+        var geon = new THREE.OctahedronGeometry(9,1);
+        var tri = new THREE.ConeGeometry(8,8,4,1);
+        var cap = new THREE.CapsuleGeometry(5,6,1,10);
+        var tor = new THREE.TorusGeometry(5,3,6,8);
+        var cyl = new THREE.CylinderGeometry(5,5,10,8);
+        var box = new THREE.BoxGeometry(9,9,9);
+        var tet = new THREE.TetrahedronGeometry(9,1);
+        var sph = new THREE.SphereGeometry(9,8,8);
+        
+        var mat = new THREE.MeshBasicMaterial({color: 0xffffff});
+        var mesh1 = new THREE.Mesh(geon,mat); //center
+        var mesh2 = new THREE.Mesh(tri,mat);//cleft
+        var mesh3 = new THREE.Mesh(cap,mat);//cright
+        var mesh4 = new THREE.Mesh(tor,mat);//tleft
+        var mesh5 = new THREE.Mesh(cyl,mat);//tright
+        var mesh6 = new THREE.Mesh(box,mat);//bright
+        var mesh7 = new THREE.Mesh(tet,mat);//bottom
+        var mesh8 = new THREE.Mesh(sph,mat);//bleft
 
-        var geon = new THREE.OctahedronGeometry(10,1);
+        var edggeo = new THREE.EdgesGeometry(mesh1.geometry);
+        var edggeo2 = new THREE.EdgesGeometry(mesh2.geometry);
+        var edggeo3 = new THREE.EdgesGeometry(mesh3.geometry);
+        var edggeo4 = new THREE.EdgesGeometry(mesh4.geometry);
+        var edggeo5 = new THREE.EdgesGeometry(mesh5.geometry);
+        var edggeo6 = new THREE.EdgesGeometry(mesh6.geometry);
+        var edggeo7 = new THREE.EdgesGeometry(mesh7.geometry);
+        var edggeo8 = new THREE.EdgesGeometry(mesh8.geometry);
 
-        var mat = new THREE.MeshLambertMaterial({color: 0xf3ffe2});
+        var edgmat = new THREE.LineBasicMaterial({color: 0x000, linewidth: 4});
+        
+        var edg = new THREE.LineSegments(geon,edgmat);
+        var edg2 = new THREE.LineSegments(tri,edgmat);
+        var edg3 = new THREE.LineSegments(cap,edgmat);
+        var edg4 = new THREE.LineSegments(tor,edgmat);
+        var edg5 = new THREE.LineSegments(cyl,edgmat);
+        var edg6 = new THREE.LineSegments(box,edgmat);
+        var edg7 = new THREE.LineSegments(tet,edgmat);
+        var edg8 = new THREE.LineSegments(sph,edgmat);
 
-        var mesh = new THREE.Mesh(geon,mat);
-        mesh.position.set(0,0,-100);
-        scn.add(mesh);
-        scn.add(light1);
-        scn.add(light2);
+        mesh1.position.set(45,0,-100);
+        mesh2.position.set(-45,0,-100);
+        mesh3.position.set(0,0,-100);
+        mesh4.position.set(-45,20,-100);
+        mesh5.position.set(45,20,-100);
+        mesh6.position.set(45,-20,-100);
+        mesh7.position.set(0,-20,-100);
+        mesh8.position.set(-45,-20,-100);
+
+        mesh1.add(edg);
+        mesh2.add(edg2);
+        mesh3.add(edg3);
+        mesh4.add(edg4);
+        mesh5.add(edg5);
+        mesh6.add(edg6);
+        mesh7.add(edg7);
+        mesh8.add(edg8);
+
+        scn.add(mesh1);
+        scn.add(mesh2);
+        scn.add(mesh3);
+        scn.add(mesh4);
+        scn.add(mesh5);
+        scn.add(mesh6);
+        scn.add(mesh7);
+        scn.add(mesh8);
 
         requestAnimationFrame(render);
 
         function render(){
-            mesh.rotation.x += 0.01;
-            mesh.rotation.y += 0.01;
+            mesh1.rotation.x += 0.01;
+            mesh1.rotation.y += 0.01;
+
+            mesh2.rotation.x -= 0.01;
+            mesh2.rotation.y -= 0.01;
+
+            mesh3.rotation.x -= 0.01;
+            mesh3.rotation.y -= 0.01;
+
+            mesh4.rotation.x += 0.01;
+            mesh4.rotation.y += 0.01;
+
+            mesh5.rotation.x -= 0.01;
+            mesh5.rotation.y -= 0.01;
+
+            mesh6.rotation.x += 0.01;
+            mesh6.rotation.y += 0.01;
+
+            mesh7.rotation.x -= 0.01;
+            mesh7.rotation.y -= 0.01;
+
+            mesh8.rotation.x += 0.01;
+            mesh8.rotation.y += 0.01;
+
             ren.render(scn,cam);
             requestAnimationFrame(render);
         }
 
         ren.render(scn,cam);
+
         console.log("%cMade by Amirtha Krishnan.","background-color: #000; color: #ff0;font-size:1rem;");
         console.log("%cReach out to me at @amirthaz on Instagram.","background-color: #000; color: #ff0;font-size:1rem;");
+
     </script>
 
 </body>
